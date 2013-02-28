@@ -12,12 +12,23 @@ def parseTwitData(twitData):
     data = []
     parsedTwit = {}
 
-    while not len(twitData) == 0:
-        p = twitData.partition(',')
-        twitData = p[2]
-        data.append(p[0])
-        
-##    data = twitData.split(",")
+    toAppend = ''
+    remainingTwitData = twitData
+
+    while not len(remainingTwitData) == 0:
+        p = remainingTwitData.partition(',')
+        toAppend = p[0]
+        remainingTwitData = p[2]
+        if not toAppend.startswith('"'):
+            data.append(toAppend)
+        else:
+            while not toAppend.endswith('"'):
+                print toAppend
+                p = remainingTwitData.partition(',')
+                toAppend += (',' + p[0])
+                remainingTwitData = p[2]
+
+            data.append(toAppend)
         
     parsedTwit['id'] = data[0]
     parsedTwit['body'] = data[1]
