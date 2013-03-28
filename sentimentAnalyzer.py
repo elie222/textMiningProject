@@ -1,4 +1,5 @@
 import csv
+from gradeTwit import *
 
 def analyze(twit):
     taggedTwit = ""
@@ -32,9 +33,12 @@ def main():
     posSentimentArray = convertCSVFileToArrayOfDicts('wschemaPositive.xml.csv', headers)
     negSentimentArray = convertCSVFileToArrayOfDicts('wschemaNegative.xml.csv', headers)
 
-    print twitsArray[0]
-    print posSentimentArray[0]
-    print negSentimentArray[0]
+    # print twitsArray[0]
+    # print posSentimentArray[0]
+    # print negSentimentArray[0]
+
+    gt = gradeTwit()
+    gt.grade(twitsArray[0], 'AAPL', )
 
 if __name__ == '__main__':
     main()
