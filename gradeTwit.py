@@ -4,13 +4,9 @@ import re
 
 class gradeTwit:
 
-<<<<<<< HEAD
     veryPositiveScore = 1000
 	veryNegativeScore = -1000
 	
-
-=======
->>>>>>> nothing
 	def __init__(self):
 		self.MU=set()
 		self.C=set()
