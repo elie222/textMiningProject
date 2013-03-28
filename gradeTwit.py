@@ -4,10 +4,13 @@ import re
 
 class gradeTwit:
 
+<<<<<<< HEAD
     veryPositiveScore = 1000
 	veryNegativeScore = -1000
 	
 
+=======
+>>>>>>> nothing
 	def __init__(self):
 		self.MU=set()
 		self.C=set()
@@ -21,38 +24,27 @@ class gradeTwit:
 		self.MSFT=set()
 		self.companies=[self.MU,self.C,self.MLNX,self.GOOG,self.GS,self.POT,self.AAPL,self.LVS,self.INTC,self.MSFT]
 		self.twit=""
-		
-
-
-
 
 	def readDic(self,name):
 		sum=0
 		with open(name, 'rb') as csvfile:
-			spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
-			for row in spamreader:
+			reader = csv.reader(csvfile, delimiter=',', quotechar='|')
+			for row in reader:
 				sent=row[0].replace("0","\d*")
 				#print(sent)
-				sum+=self.points (sent)
+				sum+=self.points(sent)
 		return sum
 
-
-
-
 	def points(self,sent):
-	
 		match = re.search(sent, self.twit)
 		# If-statement after search() tests if it succeeded
 	 	if match:                      
-	    		print 'found', match.group() ## 'found word:cat'
+	    	print 'found', match.group() ## 'found word:cat'
 			return 1
 	 	else:
-	    		return 0
+	    	return 0
 	
-
-
 	def insertToList(self,stock,twit):
-				
 		if stock == 'MU':
 			self.MU.add(twit)
 		elif stock == 'C':
@@ -73,7 +65,6 @@ class gradeTwit:
 			self.INTC.add(twit)
 		elif stock == 'MSFT':
 			self.MSFT.add(twit)
-		return
 
 	def scoreTwit(self,twit,curGrade):#to change according our dission for grading
 		if curGrade>veryPositiveScore:
@@ -101,8 +92,3 @@ class gradeTwit:
 			self.insertToList(company,finalTwit)
 			for com in self.companies:
 				print com
-
-
-	
-	
-
