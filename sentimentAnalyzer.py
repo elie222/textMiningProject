@@ -1,10 +1,14 @@
 import csv
 from gradeTwit import *
 
-def analyze(twit):
-    taggedTwit = ""
+posSentimentArray = {}
+negSentimentArray = {}
 
-    return taggedTwit
+def analyze(twit):
+    score = 0
+    taggedTwit = ''
+
+    return score, taggedTwit
 
 def convertCSVFileToArrayOfDicts(csvFileName, headers='first row'):
     arrayOfDicts = []
