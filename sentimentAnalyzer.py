@@ -59,7 +59,8 @@ def clean_up_sentiment_array(array):
 
     for row in array:
         clean_sentence = clean_up_sentence(row['sentence'])
-        clean_row = copy.deepcopy(row)
+        # clean_row = copy.deepcopy(row)
+        clean_row = {}
         clean_row['sentence'] = clean_sentence
         clean_row['score'] = float(row['score'])
         clean_array.append(clean_row)
@@ -75,10 +76,28 @@ def clean_up_sentence(sentence):
 
     return clean_sentence
 
+def clean_up_twits_array(twits_array):
+    '''
+    In an attempt to speed things up, this function removes most of the stuff from the array
+    that we don't need. If we need more stuff from it, we can always add it at a later date.
+    '''
+
+    clean_array = []
+
+    for twit_data in twits_array:
+        clean_row = {}
+        clean_row['body'] = twit_data['body']
+        clean_row['stock_symbols'] = twit_data['stock_symbols']
+        clean_array.append(clean_row)
+
+    return clean_array
+
 def main():
     twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
+    twits_array = clean_up_twits_array(twits_array)
 
-    headers = ['sentence','n','score','keyword']#i don't know what n is
+    #i don't know what n is. i removed n and keyword anyway to try speed things up, but it didn't help
+    headers = ['sentence','n','score','keyword']
     pos_sentiment_array = convert_csv_file_to_array_of_dicts('wschemaPositive.xml.csv', headers)
     neg_sentiment_array = convert_csv_file_to_array_of_dicts('wschemaNegative.xml.csv', headers)
 
