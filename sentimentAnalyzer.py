@@ -1,19 +1,47 @@
 import csv
-from gradeTwit import *
+import copy
+import re
+from progressbar import ProgressBar
 
-posSentimentArray = {}
-negSentimentArray = {}
+class SentimentAnalyzer:
+    def __init__(self, pos_sentiment_array, neg_sentiment_array):
+        self.pos_sentiment_array = pos_sentiment_array
+        self.neg_sentiment_array = neg_sentiment_array
 
-def analyze(twit):
-    score = 0
-    taggedTwit = ''
+    def analyze(self, twit_data):
+        pos_score = 0
+        neg_score = 0
+        tagged_twit = twit_data['body']
 
-    return score, taggedTwit
+        if len(twit_data['stock_symbols']) == 0:
+            return pos_score, tagged_twit
 
-def convertCSVFileToArrayOfDicts(csvFileName, headers='first row'):
-    arrayOfDicts = []
+        for row in self.pos_sentiment_array:
+            result = re.search(row['sentence'], tagged_twit, re.X)
 
-    with open(csvFileName, 'r') as f:
+            if result is not None:
+                pos_score += row['score']
+                # print 'POS'
+                # print tagged_twit
+                # print row['score']
+                # print row['sentence']
+
+        for row in self.neg_sentiment_array:
+            result = re.search(row['sentence'], tagged_twit, re.X)
+
+            if result is not None:
+                neg_score += row['score']
+                # print 'NEG'
+                # print tagged_twit
+                # print row['score']
+                # print row['sentence']
+
+        return pos_score - neg_score, tagged_twit
+
+def convert_csv_file_to_array_of_dicts(csv_filename, headers='first row'):
+    array_of_dicts = []
+
+    with open(csv_filename, 'r') as f:
         reader = csv.reader(f)
 
         if headers == 'first row':
@@ -22,27 +50,58 @@ def convertCSVFileToArrayOfDicts(csvFileName, headers='first row'):
         for row in reader:
             #creates a dict with headers as keys and row as values
             rowDict = dict(zip(headers,row))
-            arrayOfDicts.append(rowDict)
+            array_of_dicts.append(rowDict)
 
-    return arrayOfDicts
+    return array_of_dicts
+
+def clean_up_sentiment_array(array):
+    clean_array = []
+
+    for row in array:
+        clean_sentence = clean_up_sentence(row['sentence'])
+        clean_row = copy.deepcopy(row)
+        clean_row['sentence'] = clean_sentence
+        clean_row['score'] = float(row['score'])
+        clean_array.append(clean_row)
+
+    return clean_array
+
+def clean_up_sentence(sentence):
+    clean_sentence = sentence
+    clean_sentence = clean_sentence.replace('0','\d+')
+    clean_sentence = clean_sentence.replace('& ','')
+    clean_sentence = clean_sentence.replace('&amp ', '')
+    clean_sentence = clean_sentence.replace('\"', '')
+
+    return clean_sentence
 
 def main():
-    #example twit
-    # twitData = '407487,@dustin I&amp;#39;m long $aapl or at least until $goog OS is out next year.,2,genevate,default,normal,http://avatars.stocktwits.com/production/2/thumb-1330556785.png?407487,https://s3.amazonaws.com/st-avatars/production/2/thumb-1330556785.png?407487,false,false,0,false,false,false,false,false,0,0,false,1,"686,2044","AAPL,GOOG",,1,dustin,Fri Jul 10 21:47:36 UTC 2009,Fri Jul 10 21:47:36 UTC 2009'
-
-
-    twitsArray = convertCSVFileToArrayOfDicts('StockTwits-Data(beginning of file).csv')
+    twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
 
     headers = ['sentence','n','score','keyword']#i don't know what n is
-    posSentimentArray = convertCSVFileToArrayOfDicts('wschemaPositive.xml.csv', headers)
-    negSentimentArray = convertCSVFileToArrayOfDicts('wschemaNegative.xml.csv', headers)
+    pos_sentiment_array = convert_csv_file_to_array_of_dicts('wschemaPositive.xml.csv', headers)
+    neg_sentiment_array = convert_csv_file_to_array_of_dicts('wschemaNegative.xml.csv', headers)
 
-    # print twitsArray[0]
-    # print posSentimentArray[0]
-    # print negSentimentArray[0]
+    pos_sentiment_array = clean_up_sentiment_array(pos_sentiment_array)
+    neg_sentiment_array = clean_up_sentiment_array(neg_sentiment_array)
 
-    gt = gradeTwit()
-    gt.grade(twitsArray[0], 'AAPL', )
+    sa = SentimentAnalyzer(pos_sentiment_array, neg_sentiment_array)
+
+    pbar = ProgressBar(maxval=len(twits_array)).start()
+    i = 0
+
+    for twit_data in twits_array:
+        score, tagged_twit = sa.analyze(twit_data)
+
+        if not score == 0:
+            print 'TAGGED TWIT:', tagged_twit
+            print 'SCORE:', score
+
+        pbar.update(i)
+        i += 1
+
+    pbar.finish()
+
 
 if __name__ == '__main__':
     main()

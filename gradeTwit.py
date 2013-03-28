@@ -1,6 +1,12 @@
 import csv
 import re
 
+ # frase = frase.replaceAll("0", "[0-9//.]*");
+ #               frase = frase.replaceAll("& ", "");
+ #               frase = frase.replaceAll("&amp ", "");
+ #               frase = frase.replaceAll("\"", "");
+ #               score = s
+
 
 class gradeTwit:
 
@@ -77,10 +83,10 @@ class gradeTwit:
         if company is not None:
             self.twit=twitData
             print self.twit
-            pos=self.readDic('Positive.xml.csv')
+            pos=self.readDic('wschemaPositive.xml.csv')
             print pos
 
-            neg=self.readDic('Negative.xml.csv')
+            neg=self.readDic('wschemaNegative.xml.csv')
             print neg
             total=pos - neg
             print total
