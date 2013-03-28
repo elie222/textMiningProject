@@ -4,7 +4,8 @@ import re
 
 class gradeTwit:
 
-	
+    veryPositiveScore = 1000
+	veryNegativeScore = -1000
 	
 
 	def __init__(self):
@@ -75,8 +76,12 @@ class gradeTwit:
 		return
 
 	def scoreTwit(self,twit,curGrade):#to change according our dission for grading
-		if curGrade>0:
-			return "<positive> "+twit+" </positive>" 
+		if curGrade>veryPositiveScore:
+            return "<very positive> "+twit+" </very positive>"
+        elif curGrade>0:
+			return "<positive> "+twit+" </positive>"
+        elif curGrade<veryNegativeScore:
+            return "<very negative> "+twit+" </very negative>"
 		elif curGrade<0:
 			return "<negative> "+twit+" </negative>" 
 		return "<neutral> "+twit+" </neutral>" 
