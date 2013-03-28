@@ -14,6 +14,7 @@ def convertCSVFileToArrayOfDicts(csvFileName):
         headers = reader.next()
 
         for row in reader:
+            #creates a dict with headers as keys and row as values
             rowDict = dict(zip(headers,row))
             arrayOfDicts.append(rowDict)
 
