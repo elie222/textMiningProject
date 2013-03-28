@@ -1,3 +1,4 @@
+import sys
 import csv
 import copy
 import re
@@ -93,7 +94,14 @@ def clean_up_twits_array(twits_array):
     return clean_array
 
 def main():
-    twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
+    # twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
+    twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData1000.csv')
+    # headers = ['id', 'body', 'user_id', 'user_login', 'message_source', 'message_type', 'avatar_url', 
+    # 'avatar_url_ssl', 'investor_relations', 'private_relations', 'reply_count', 'reply_parent', 'chart', 
+    # 'forex', 'future', 'filtered', 'followers', 'following', 'recommended', 'mention_ids', 'stock_ids', 
+    # 'stock_symbols', 'in_reply_to_message_id', 'in_reply_to_user_id', 'in_reply_to_user_login', 'updated_at', 
+    # 'created_at']
+    # twits_array = convert_csv_file_to_array_of_dicts('some twits.csv', headers)
     twits_array = clean_up_twits_array(twits_array)
 
     #i don't know what n is. i removed n and keyword anyway to try speed things up, but it didn't help
