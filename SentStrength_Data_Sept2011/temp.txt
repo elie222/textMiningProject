@@ -1,0 +1,190 @@
+abate	-2	General Inquirer Feb 2010
+abdicate*	-2	General Inquirer Feb 2010
+abhor*	-4	General Inquirer Feb 2010
+abject	-2	General Inquirer Feb 2010
+abnormal*	-2	General Inquirer Feb 2010
+abolish*	-2	General Inquirer Feb 2010
+abomina*	-3	General Inquirer Feb 2010
+abrasive*	-2	General Inquirer Feb 2010
+abrupt	-2	General Inquirer Feb 2010
+abscond*	-2	General Inquirer Feb 2010
+absence	-2	General Inquirer Feb 2010
+absent*	-2	General Inquirer Feb 2010
+absurd*	-2	Feb-11
+abuse*	-4	
+abusi*	-4	removed accept	1	accepta*	2	accepted	2	accepting	2	accepts	2	
+abyss	-2	General Inquirer Feb 2010
+accident*	-2	General Inquirer Feb 2010
+accomplish*	2	Hannes GI add
+accost*	-2	General Inquirer Feb 2010
+accursed	-2	General Inquirer Feb 2010
+accus*	-2	General Inquirer Feb 2010
+accusation*	-2	General Inquirer Feb 2010
+ache*	-2	
+achen*	1	kev
+acher*	1	kev
+acheson	1	kev
+acheta	1	kev
+aching	-2	removed active*	2	
+acrimon*	-2	General Inquirer Feb 2010
+addict*	-2	General Inquirer Feb 2010
+admir*	3	
+admiral*	1	kev
+admoni*	-2	General Inquirer Feb 2010
+ador*	4	advantag*	2	
+adorn*	1	kev
+adroit	2	Hannes GI add
+adulterat*	-2	General Inquirer Feb 2010
+adulteror	-3	kev add
+adultery	-3	General Inquirer Feb 2010
+adventur*	1	
+advers*	-2	
+affab*	3	Hannes GI add
+affectation*	-2	General Inquirer Feb 2010
+affection*	3	
+afflict*	-3	General Inquirer Feb 2010
+afraid	-4	
+against	-2	General Inquirer Feb 2010
+aggravat*	-3	
+aggress*	-3	
+aggrieve*	-2	General Inquirer Feb 2010
+aghast	-2	General Inquirer Feb 2010
+agitat*	-2	
+agonis*	-4	kev
+agoniz*	-4	
+agony	-4	removed agree	2	
+agreeab*	1	removed agreed	2	agreeing	2	agreement*	2	agrees	2	
+ail	-2	General Inquirer Feb 2010
+ailing	-3	kev add
+ailment*	-2	General Inquirer Feb 2010
+ails	-2	General Inquirer Feb 2010
+aimless*	-2	General Inquirer Feb 2010
+alarm*	-3	
+alas	-2	General Inquirer Feb 2010
+alibi*	-2	General Inquirer Feb 2010
+alien	-2	General Inquirer Feb 2010
+alienat*	-2	General Inquirer Feb 2010
+allegation*	-2	General Inquirer Feb 2010
+allege*	-2	General Inquirer Feb 2010
+alol	2	actually laughing out loud
+alone	-1	removed alright*	2	
+aloof	-2	General Inquirer Feb 2010
+altercation*	-2	General Inquirer Feb 2010
+amaz*	3	
+amazon*	1	kev
+ambiguit*	-2	General Inquirer Feb 2010
+ambiguous*	-2	General Inquirer Feb 2010
+ambivalent	-2	General Inquirer Feb 2010
+ambush*	-2	General Inquirer Feb 2010
+amiab*	3	Hannes GI add
+amiss	-2	General Inquirer Feb 2010
+amor*	2	
+amoral*	-3	kev
+amort*	1	kev
+amour	2	Hannes GI add
+amputate*	-2	General Inquirer Feb 2010
+amus*	2	
+anarchist*	-2	General Inquirer Feb 2010
+anarchy	-2	General Inquirer Feb 2010
+angelic	2	Hannes GI add
+anger*	-4	
+angr*	-4	
+angraecum	1	kev
+angrecum	1	kev
+anguish*	-4	
+animosity	-2	General Inquirer Feb 2010
+annihilate*	-3	General Inquirer Feb 2010
+annihilation	-4	General Inquirer Feb 2010
+annoy*	-3	
+anomalous	-2	General Inquirer Feb 2010
+anomaly	-2	General Inquirer Feb 2010
+antagoni*	-2	
+anti-social	-2	General Inquirer Feb 2010
+antipathy	-2	General Inquirer Feb 2010
+antiquated*	-2	General Inquirer Feb 2010
+antitrust	-2	General Inquirer Feb 2010
+anxi*	-3	
+aok	2	
+apath*	-2	
+appall*	-4	
+applaud*	2	Hannes GI add
+applause	2	Hannes GI add
+appreciat*	2	
+apprehens*	-3	
+apprehens*	-3	General Inquirer Feb 2010
+arbitrary	-2	General Inquirer Feb 2010
+ardent	3	Hannes GI add
+arduous*	-2	General Inquirer Feb 2010
+argh*	-2	
+argu*	-2	
+arrogan*	-3	
+arsehole*	-3	
+artificial	-1	General Inquirer Feb 2010
+asham*	-4	
+ashamed	-2	General Inquirer Feb 2010
+asinine	-2	Feb-11
+assail*	-3	General Inquirer Feb 2010
+assassin*	-3	General Inquirer Feb 2010
+assault*	-3	
+asshole*	-3	remvoed assur*	2	
+asswipe	-3	Feb-11
+astray	-2	General Inquirer Feb 2010
+asunder	-2	General Inquirer Feb 2010
+atrocious*	-4	General Inquirer Feb 2010
+atrophy	-2	General Inquirer Feb 2010
+attachment*	1	
+attack*	-3	
+attract*	2	
+auster*	-2	General Inquirer Feb 2010 kev mod
+autocrat*	-2	General Inquirer Feb 2010
+autocratic	-3	General Inquirer Feb 2010
+avaric*	-3	General Inquirer Feb 2010
+avenge*	-2	General Inquirer Feb 2010
+aversi*	-3	remvoed avoid*	-1	
+avert*	-2	General Inquirer Feb 2010
+avoid*	-2	General Inquirer Feb 2010
+award*	1	
+awesome*	3	kev add star
+awful*	-4	
+awkward*	-2	
+babble*	-2	General Inquirer Feb 2010
+babies	2	27 July 2009 (assumes positive context -e.g. hey baby)
+baby	2	27 July 2009 (assumes positive context -e.g. hey baby)
+backwardness	-2	General Inquirer Feb 2010
+bad	-2	
+badly	-2	General Inquirer Feb 2010
+badmouth*	-3	kev
+badness	-3	kev
+baffle*	-2	General Inquirer Feb 2010
+bail*	-2	General Inquirer Feb 2010
+bait*	-2	General Inquirer Feb 2010
+balderdash	-2	Feb-11
+balk*	-2	General Inquirer Feb 2010
+baloney	-2	Feb-11
+banal*	-2	General Inquirer Feb 2010
+bandit*	-2	General Inquirer Feb 2010
+bane	-2	General Inquirer Feb 2010
+banish*	-2	General Inquirer Feb 2010
+bankrupt*	-3	General Inquirer Feb 2010
+barbari*	-3	General Inquirer Feb 2010
+barf*	-2	Feb-11
+barren	-2	General Inquirer Feb 2010
+barrier*	-2	General Inquirer Feb 2010
+bashful*	-3	
+bastard*	-3	removed battl*	-2	
+battle*	-2	General Inquirer Feb 2010
+beastly	-2	General Inquirer Feb 2010
+beaten	-1	
+beatings	-3	kev
+beaut*	3	
+beg	-2	General Inquirer Feb 2010
+beggar*	-2	General Inquirer Feb 2010
+behead*	-5	General Inquirer Feb 2010
+belated	-2	General Inquirer Feb 2010
+belie	-2	General Inquirer Feb 2010
+belittl*	-3	General Inquirer Feb 2010 kev mod
+belligerent*	-3	General Inquirer Feb 2010
+beloved*	3	kev add star removed benefic*	2	benefit	2	benefits	2	
+benefitt*	2	
+benevolen*	2	
+benign*	2	
