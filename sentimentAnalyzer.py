@@ -3,7 +3,7 @@ import csv
 import copy
 import re
 import os
-import nltk
+import nltk # http://nltk.org/install.html
 from HTMLParser import HTMLParser
 from progressbar import ProgressBar
 
@@ -15,6 +15,18 @@ These are the headers in the StocksTwitFiles:
     'stock_symbols', 'in_reply_to_message_id', 'in_reply_to_user_id', 'in_reply_to_user_login', 'updated_at', 
     'created_at']
 To access the body of a twit you would write twit_data['body']. 
+'''
+
+'''
+TODO:
+'Long' should give a positive sentiment. See: http://www.investopedia.com/terms/l/long.asp
+The following is bad:
+TWIT: @dustin I&amp;#39;m long $aapl or at least until $goog OS is out next year.
+SCORE: -2
+
+'Short' should give a negative score. See: http://www.investopedia.com/terms/s/short.asp
+'Bearish', 'Bear market' - bad
+'Bullish', 'Bull market' - good
 '''
 
 class SentimentAnalyzer:
@@ -73,24 +85,30 @@ class SentimentAnalyzer:
         TODO: Doesn't work ATM.
         Returns the score for the given twit data.
         '''
+
         h = HTMLParser()
 
         score = 0
-        tagged_twit = twit_data['body']
+        twit = self.clean_up_twit(twit_data['body'])
+        tagged_twit = twit
 
-        fixed_twit = h.unescape(twit_data['body'])
+        if len(twit_data['stock_symbols']) == 0:
+            return score, tagged_twit
+
+        fixed_twit = h.unescape(twit)
         fixed_twit = self.convertSlangToWords(fixed_twit)
 
-        wordList = nltk.word_tokenize(fixed_twit)        
+        # this just splits the sentence into an array (including putting punctuation into its own array cell).
+        wordList = nltk.word_tokenize(fixed_twit)   
         
         twit_negating_word_index_set = set([])
         twit_booster_word_index_to_score_map = {}
         twit_emotion_word_index_to_score_map = {}
-        for i in xrange(__len__(wordList)):
+        for i in xrange(len(wordList)):
             if wordList[i] in self.NegatingWordSet:
                 twit_negating_word_index_set.add(i)
             elif wordList[i] in self.BoosterWordMap:
-                twit_booster_word_index_to_score_map[i] = self.BoosterWordMap[key]
+                twit_booster_word_index_to_score_map[i] = self.BoosterWordMap[wordList[i]]
             elif wordList[i] in self.EmoticonLookupTableMap:
                 score += int(self.EmoticonLookupTableMap[i])
             else:
@@ -133,7 +151,8 @@ class SentimentAnalyzer:
             else:
                 sign = 1
             score = sign*(abs(score) + 1)
-        return score
+
+        return score, tagged_twit
 
     def convertSlangToWords(self, twit):
         '''
@@ -144,7 +163,20 @@ class SentimentAnalyzer:
         for key in self.SlangLookupTableMap:
             twit = twit.replace(key, self.SlangLookupTableMap[key])
 
-        return twit    
+        return twit
+
+    def clean_up_twit(self, twit):
+        '''
+        Returns a twit with charachters converted to normal charachters. eg. &amp; -> &
+        Maybe HTMLParser is supposed to do this, but it doesn't handle everything.
+        '''
+        twit = twit.replace('&amp;#39;', '\'')
+        twit = twit.replace('&amp;', '&')
+        twit = twit.replace('&quot;', '\"')
+        twit = twit.replace('&lt;', '<')
+        twit = twit.replace('&gt;', '>')
+
+        return twit
     
 def convert_csv_file_to_array_of_dicts(csv_filename, headers='first row'):
     '''
@@ -228,10 +260,12 @@ def clean_up_twits_array(twits_array):
     return clean_array
 
 def main():
-    # twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
-    twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData1000.csv')
+    twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
+    # twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData1000.csv')
 
     sa = SentimentAnalyzer()
+
+    print 'PRINTING THE SCORES OF TWITS WITH SCORE != 0'
 
     # pbar is just to give a visual indication of the progress made so far.
     pbar = ProgressBar(maxval=len(twits_array)).start()
@@ -241,7 +275,7 @@ def main():
         score, tagged_twit = sa.analyze(twit_data)
 
         if not score == 0:
-            print 'TAGGED TWIT:', tagged_twit
+            print 'TWIT:', tagged_twit
             print 'SCORE:', score
 
         pbar.update(i)
