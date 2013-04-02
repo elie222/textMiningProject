@@ -6,6 +6,16 @@ import os
 from HTMLParser import HTMLParser
 from progressbar import ProgressBar
 
+'''
+These are the headers in the StocksTwitFiles:
+    ['id', 'body', 'user_id', 'user_login', 'message_source', 'message_type', 'avatar_url', 
+    'avatar_url_ssl', 'investor_relations', 'private_relations', 'reply_count', 'reply_parent', 'chart', 
+    'forex', 'future', 'filtered', 'followers', 'following', 'recommended', 'mention_ids', 'stock_ids', 
+    'stock_symbols', 'in_reply_to_message_id', 'in_reply_to_user_id', 'in_reply_to_user_login', 'updated_at', 
+    'created_at']
+To access the body of a twit you would write twit_data['body']. 
+'''
+
 class SentimentAnalyzer:
     def __init__(self):
         """
@@ -15,15 +25,21 @@ class SentimentAnalyzer:
         
         SlangLookupTablePath = os.path.join(os.path.dirname(__file__), 'SentStrength_Data_Sept2011/SlangLookupTable.txt')
         self.SlangLookupTableMap = buildMapFromFile(SlangLookupTablePath,"\t")
+
         NegatingWordListPath = os.path.join(os.path.dirname(__file__), 'SentStrength_Data_Sept2011/NegatingWordList.txt')
         self.NegatingWordSet = buildSetFromFile(NegatingWordListPath)
+        
         EmotionLookupTablePath = os.path.join(os.path.dirname(__file__), 'SentStrength_Data_Sept2011/EmotionLookupTable.txt')
         self.EmotionLookupTableMap = buildMapFromFile(EmotionLookupTablePath,"\t")
+        
         EmoticonLookupTablePath = os.path.join(os.path.dirname(__file__), 'SentStrength_Data_Sept2011/EmoticonLookupTable.txt')
         self.EmoticonLookupTableMap = buildMapFromFile(EmoticonLookupTablePath,"\t")
+        
         BoosterWordListPath = os.path.join(os.path.dirname(__file__), 'SentStrength_Data_Sept2011/BoosterWordList.txt')
         self.BoosterWordMap = buildMapFromFile(BoosterWordListPath,"\t")
-        h = HTMLParser()
+        
+        # Needs to be self.h if you want to put it here.
+        # h = HTMLParser()
         
     """
     def analyze(self, twit_data):
@@ -58,8 +74,11 @@ class SentimentAnalyzer:
     """
     def analyze(self, twit_data):
         '''
+        Doesn't work ATM.
         Returns the score for the given twit data.
         '''
+        h = HTMLParser()
+
         score = 0
         tagged_twit = twit_data['body']
         fixed_twit = h.unescape(twit_data['body'])
@@ -126,6 +145,9 @@ def convert_csv_file_to_array_of_dicts(csv_filename, headers='first row'):
     Returns an array of dictionaries where each dictionary represents a row of the csv file.
     The keys of each dictionary are the headers. The values are the cells of the row.
 
+    Example: if you want to access the stock_ids of the fifth twit in the list, you would do:
+    array_of_dicts[4]['stock_ids'].
+
     headers - the names of the keys of the dictionary. If headers is set to 'first row',
     then the first row of the csv file will be the keys in the dictionary.
     '''
@@ -183,26 +205,11 @@ def clean_up_twits_array(twits_array):
 
 def main():
     # twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
-    """
     twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData1000.csv')
-    # headers = ['id', 'body', 'user_id', 'user_login', 'message_source', 'message_type', 'avatar_url', 
-    # 'avatar_url_ssl', 'investor_relations', 'private_relations', 'reply_count', 'reply_parent', 'chart', 
-    # 'forex', 'future', 'filtered', 'followers', 'following', 'recommended', 'mention_ids', 'stock_ids', 
-    # 'stock_symbols', 'in_reply_to_message_id', 'in_reply_to_user_id', 'in_reply_to_user_login', 'updated_at', 
-    # 'created_at']
-    # twits_array = convert_csv_file_to_array_of_dicts('some twits.csv', headers)
-    twits_array = clean_up_twits_array(twits_array)
 
-    #i don't know what n is. i removed n and keyword anyway to try speed things up, but it didn't help
-    headers = ['sentence','n','score','keyword']
-    pos_sentiment_array = convert_csv_file_to_array_of_dicts('wschemaPositive.xml.csv', headers)
-    neg_sentiment_array = convert_csv_file_to_array_of_dicts('wschemaNegative.xml.csv', headers)
+    sa = SentimentAnalyzer()
 
-    pos_sentiment_array = clean_up_sentiment_array(pos_sentiment_array)
-    neg_sentiment_array = clean_up_sentiment_array(neg_sentiment_array)
-
-    sa = SentimentAnalyzer(pos_sentiment_array, neg_sentiment_array)
-
+    # pbar is just to give a visual indication of the progress made so far.
     pbar = ProgressBar(maxval=len(twits_array)).start()
     i = 0
 
@@ -217,8 +224,8 @@ def main():
         i += 1
 
     pbar.finish()
-    """
-    sa = SentimentAnalyzer()
+
+
 
 
 if __name__ == '__main__':
