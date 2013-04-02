@@ -57,6 +57,9 @@ class SentimentAnalyzer:
         return pos_score - neg_score, tagged_twit
     """
     def analyze(self, twit_data):
+        '''
+        Returns the score for the given twit data.
+        '''
         score = 0
         tagged_twit = twit_data['body']
         fixed_twit = h.unescape(twit_data['body'])
@@ -81,13 +84,13 @@ class SentimentAnalyzer:
                         twit_emotion_word_index_to_score_map[i] = self.EmotionLookupTableMap[key]
         
         for emotionalWordIndex in twit_emotion_word_index_to_score_map:
-            siman = 0
+            sign = 0
             emScore = int(twit_emotion_word_index_to_score_map[emotionalWordIndex])
             absScore = abs(emScore)
             if emScore < 0:
-                siman = -1
+                sign = -1
             else:
-                siman = 1
+                sign = 1
             if i == 1:
                 if  (i - 1) in twit_booster_word_index_to_score_map:
                     absScore += twit_booster_word_index_to_score_map[i - 1]
@@ -104,21 +107,28 @@ class SentimentAnalyzer:
                 elif (i - 2) in twit_negating_word_index_set:
                     absScore *= -1
                 
-            emScore = absScore * siman
+            emScore = absScore * sign
             
             score += emScore
             
         if not re.match('!!!', fixed_twit ) is None:
-            siman = 0 
+            sign = 0 
             if score < 0:
-                siman = -1
+                sign = -1
             else:
-                siman = 1
-            score = siman*(abs(score) + 1)
+                sign = 1
+            score = sign*(abs(score) + 1)
         return score
     
     
 def convert_csv_file_to_array_of_dicts(csv_filename, headers='first row'):
+    '''
+    Returns an array of dictionaries where each dictionary represents a row of the csv file.
+    The keys of each dictionary are the headers. The values are the cells of the row.
+
+    headers - the names of the keys of the dictionary. If headers is set to 'first row',
+    then the first row of the csv file will be the keys in the dictionary.
+    '''
     array_of_dicts = []
 
     with open(csv_filename, 'r') as f:
@@ -154,28 +164,6 @@ def buildSetFromFile (fname):
             fixedRow = fixedRow.replace('\xa0','')
             retSet.add(fixedRow)           
     return retSet
-    
-def clean_up_sentiment_array(array):
-    clean_array = []
-
-    for row in array:
-        clean_sentence = clean_up_sentence(row['sentence'])
-        # clean_row = copy.deepcopy(row)
-        clean_row = {}
-        clean_row['sentence'] = clean_sentence
-        clean_row['score'] = float(row['score'])
-        clean_array.append(clean_row)
-
-    return clean_array
-
-def clean_up_sentence(sentence):
-    clean_sentence = sentence
-    clean_sentence = clean_sentence.replace('0','\d+')
-    clean_sentence = clean_sentence.replace('& ','')
-    clean_sentence = clean_sentence.replace('&amp ', '')
-    clean_sentence = clean_sentence.replace('\"', '')
-
-    return clean_sentence
 
 def clean_up_twits_array(twits_array):
     '''
