@@ -122,7 +122,7 @@ class SentimentAnalyzer:
 
         wordList = self.convertSlangToWords(wordList)
 
-
+        #print wordList
         
         twit_negating_word_index_set = set([])
         twit_booster_word_index_to_score_map = {}
@@ -167,37 +167,22 @@ class SentimentAnalyzer:
                 sign = 1
             if i == 1:
                 if  (i - 1) in twit_booster_word_index_to_score_map:
-                    try:
-                        absScore += int(twit_booster_word_index_to_score_map[i - 1])
-                    except:
-                        print 'ERROR!'
-                        print 'FOR TWIT:', twit
-                        print 'IN THIS CODE: absScore += int(twit_booster_word_index_to_score_map[i - 1])'
+                    absScore += int(twit_booster_word_index_to_score_map[i - 1])
                 elif (i - 1) in twit_negating_word_index_set:
                     absScore *= -1
             elif i > 1:
                 if  (i - 1) in twit_booster_word_index_to_score_map:
-                    try:
-                        absScore += int(twit_booster_word_index_to_score_map[i - 1])
-                    except:
-                        print 'ERROR!'
-                        print 'FOR TWIT:', twit
-                        print 'IN THIS CODE: absScore += int(twit_booster_word_index_to_score_map[i - 1])'
+                    absScore += int(twit_booster_word_index_to_score_map[i - 1])
                 elif (i - 1) in twit_negating_word_index_set:
                     absScore *= -1
                     
                 if  (i - 2) in twit_booster_word_index_to_score_map:
-                    try:
-                        absScore += int(twit_booster_word_index_to_score_map[i - 1])
-                    except:
-                        print 'ERROR!'
-                        print 'FOR TWIT:', twit
-                        print 'IN THIS CODE: absScore += int(twit_booster_word_index_to_score_map[i - 1])'
+                    absScore += int(twit_booster_word_index_to_score_map[i - 2])
                 elif (i - 2) in twit_negating_word_index_set:
                     absScore *= -1
                 
             emScore = absScore * sign
-            
+            #print emScore
             score += emScore
             
         if not re.match('!!!', fixed_twit ) is None:
@@ -344,7 +329,7 @@ def main():
     startTime = time()
 
     # twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
-    twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData1000.csv')
+    twits_array = convert_csv_file_to_array_of_dicts('check.csv')
 
     sa = SentimentAnalyzer()
 
