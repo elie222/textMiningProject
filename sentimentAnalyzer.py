@@ -344,7 +344,7 @@ def main():
     startTime = time()
 
     # twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
-    twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData10000.csv')
+    twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData1000.csv')
 
     sa = SentimentAnalyzer()
 
