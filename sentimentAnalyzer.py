@@ -3,6 +3,7 @@ import csv
 import copy
 import re
 import os
+import nltk
 from HTMLParser import HTMLParser
 from progressbar import ProgressBar
 
@@ -17,12 +18,7 @@ To access the body of a twit you would write twit_data['body'].
 '''
 
 class SentimentAnalyzer:
-    def __init__(self):
-        """
-        self.pos_sentiment_array = pos_sentiment_array
-        self.neg_sentiment_array = neg_sentiment_array
-        """
-        
+    def __init__(self):        
         SlangLookupTablePath = os.path.join(os.path.dirname(__file__), 'SentStrength_Data_Sept2011/SlangLookupTable.txt')
         self.SlangLookupTableMap = buildMapFromFile(SlangLookupTablePath,"\t")
 
@@ -74,18 +70,18 @@ class SentimentAnalyzer:
     """
     def analyze(self, twit_data):
         '''
-        Doesn't work ATM.
+        TODO: Doesn't work ATM.
         Returns the score for the given twit data.
         '''
         h = HTMLParser()
 
         score = 0
         tagged_twit = twit_data['body']
+
         fixed_twit = h.unescape(twit_data['body'])
-        for key in self.SlangLookupTableMap:
-            fixed_twit.replace(key,self.SlangLookupTableMap[key])
-        wordList = nltk.word_tokenize(fixed_twit)
-        
+        fixed_twit = self.convertSlangToWords(fixed_twit)
+
+        wordList = nltk.word_tokenize(fixed_twit)        
         
         twit_negating_word_index_set = set([])
         twit_booster_word_index_to_score_map = {}
@@ -138,7 +134,17 @@ class SentimentAnalyzer:
                 sign = 1
             score = sign*(abs(score) + 1)
         return score
-    
+
+    def convertSlangToWords(self, twit):
+        '''
+        Returns the twit with the slang replaced as actual words.
+        For example, if the twit is 'btw nobody likes Ofir'. This function will return
+        'by the way nobody likes Ofir'.
+        '''
+        for key in self.SlangLookupTableMap:
+            twit = twit.replace(key, self.SlangLookupTableMap[key])
+
+        return twit    
     
 def convert_csv_file_to_array_of_dicts(csv_filename, headers='first row'):
     '''
@@ -167,6 +173,14 @@ def convert_csv_file_to_array_of_dicts(csv_filename, headers='first row'):
     return array_of_dicts
 
 def buildMapFromFile (fname, sep):
+    '''
+    The file is of the form:
+    key1 sep value1
+    key2 sep value2
+    etc.
+
+    Returns {'key1': 'value1', 'key2': 'value2', ...} 
+    '''
     retMap = {}
     with open(fname) as f:
         content = f.readlines()
@@ -174,17 +188,27 @@ def buildMapFromFile (fname, sep):
             splitRows = row.split(sep)
             splitRows[1] = splitRows[1].replace('\n','')
             splitRows[1] = splitRows[1].replace('\xa0','') 
-            retMap[splitRows[0]] = splitRows[1]           
+            retMap[splitRows[0]] = splitRows[1]
+
     return retMap
     
 def buildSetFromFile (fname):
+    '''
+    The file is of the form:
+    value1
+    value2
+    etc.
+
+    Returns ('value1', value2', ...) 
+    '''
     retSet = set([])
     with open(fname) as f:
         content = f.readlines()
         for row in content:
             fixedRow = row.replace('\n','')
             fixedRow = fixedRow.replace('\xa0','')
-            retSet.add(fixedRow)           
+            retSet.add(fixedRow)
+     
     return retSet
 
 def clean_up_twits_array(twits_array):

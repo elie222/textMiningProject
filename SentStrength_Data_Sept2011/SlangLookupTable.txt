@@ -46,7 +46,7 @@ imao	in my arrogant opinion
 imnsho	in my not so humble opinion 
 imo	in my opinion 
 iow	in other words 
-ipn	I’m posting naked 
+ipn	I'm posting naked 
 irl	in real life 
 jk	just kidding
 l8r	later
@@ -80,7 +80,7 @@ thx	thanks
 ttyl	talk to you later 
 u	you
 ur	you are
-uw	you’re welcome 
+uw	you're welcome 
 wb	welcome back 
 wfm	works for me 
 wibni	wouldn't it be nice if 
