@@ -18,15 +18,32 @@ To access the body of a twit you would write twit_data['body'].
 '''
 
 '''
-TODO:
-'Long' should give a positive sentiment. See: http://www.investopedia.com/terms/l/long.asp
-The following is bad:
-TWIT: @dustin I&amp;#39;m long $aapl or at least until $goog OS is out next year.
-SCORE: -2
+Maybe we should deal with this. I'm not sure.
 
-'Short' should give a negative score. See: http://www.investopedia.com/terms/s/short.asp
-'Bearish', 'Bear market' - bad
-'Bullish', 'Bull market' - good
+A list of twits with bad scores:
+
+TWIT: $INTC is the bomb.
+SCORE: -2
+Probably leave this one. Bomb could be bad.
+
+TWIT: $DRIV looks like it is breaking down from base.
+SCORE: 2
+
+TWIT: $WBSN looks like it is headed down for a gap fill.
+SCORE: 2
+
+TWIT: $CRY was a good one today sorry for not posting it sooner
+SCORE: -4
+What went wrong here? The word CRY? If so, we should deal with that. Shouldn't
+be checking things that start with $ or @.
+
+
+
+BUG!
+LINE OF CODE:
+absScore += twit_booster_word_index_to_score_map[i - 1]
+There was a problem with the twit:
+$ININ also holding its breakout very well.
 '''
 
 class SentimentAnalyzer:
@@ -45,41 +62,46 @@ class SentimentAnalyzer:
         
         BoosterWordListPath = os.path.join(os.path.dirname(__file__), 'SentStrength_Data_Sept2011/BoosterWordList.txt')
         self.BoosterWordMap = buildMapFromFile(BoosterWordListPath,"\t")
+
+
+        # some other words:
+        self.addMoreEmotionWords()
         
         # Needs to be self.h if you want to put it here.
         # h = HTMLParser()
         
-    """
-    def analyze(self, twit_data):
-        pos_score = 0
-        neg_score = 0
-        tagged_twit = twit_data['body']
 
-        if len(twit_data['stock_symbols']) == 0:
-            return pos_score, tagged_twit
+    # def analyze(self, twit_data):
+    #     pos_score = 0
+    #     neg_score = 0
+    #     tagged_twit = twit_data['body']
 
-        for row in self.pos_sentiment_array:
-            result = re.search(row['sentence'], tagged_twit, re.X)
+    #     if len(twit_data['stock_symbols']) == 0:
+    #         return pos_score, tagged_twit
 
-            if result is not None:
-                pos_score += row['score']
-                # print 'POS'
-                # print tagged_twit
-                # print row['score']
-                # print row['sentence']
+    #     for row in self.pos_sentiment_array:
+    #         result = re.search(row['sentence'], tagged_twit, re.X)
 
-        for row in self.neg_sentiment_array:
-            result = re.search(row['sentence'], tagged_twit, re.X)
+    #         if result is not None:
+    #             pos_score += row['score']
+    #             # print 'POS'
+    #             # print tagged_twit
+    #             # print row['score']
+    #             # print row['sentence']
 
-            if result is not None:
-                neg_score += row['score']
-                # print 'NEG'
-                # print tagged_twit
-                # print row['score']
-                # print row['sentence']
+    #     for row in self.neg_sentiment_array:
+    #         result = re.search(row['sentence'], tagged_twit, re.X)
 
-        return pos_score - neg_score, tagged_twit
-    """
+    #         if result is not None:
+    #             neg_score += row['score']
+    #             # print 'NEG'
+    #             # print tagged_twit
+    #             # print row['score']
+    #             # print row['sentence']
+
+    #     return pos_score - neg_score, tagged_twit
+
+
     def analyze(self, twit_data):
         '''
         TODO: Doesn't work ATM.
@@ -89,32 +111,53 @@ class SentimentAnalyzer:
         h = HTMLParser()
 
         score = 0
-        twit = self.clean_up_twit(twit_data['body'])
+        twit = clean_up_twit(twit_data['body'])
         tagged_twit = twit
 
         if len(twit_data['stock_symbols']) == 0:
             return score, tagged_twit
 
         fixed_twit = h.unescape(twit)
-        fixed_twit = self.convertSlangToWords(fixed_twit)
 
         # this just splits the sentence into an array (including putting punctuation into its own array cell).
-        wordList = nltk.word_tokenize(fixed_twit)   
+        wordList = nltk.word_tokenize(fixed_twit)
+
+        wordList = self.convertSlangToWords(wordList)
+
+
         
         twit_negating_word_index_set = set([])
         twit_booster_word_index_to_score_map = {}
         twit_emotion_word_index_to_score_map = {}
+
+        # print '===TWIT:', twit
+
         for i in xrange(len(wordList)):
             if wordList[i] in self.NegatingWordSet:
+                # print 'NEGATING WORD:', wordList[i]
                 twit_negating_word_index_set.add(i)
             elif wordList[i] in self.BoosterWordMap:
+                # print 'BOOSTER WORD:', wordList[i]
                 twit_booster_word_index_to_score_map[i] = self.BoosterWordMap[wordList[i]]
             elif wordList[i] in self.EmoticonLookupTableMap:
+                # print 'EMOTICON:', wordList[i]
                 score += int(self.EmoticonLookupTableMap[i])
             else:
                 for key in self.EmotionLookupTableMap:
-                    if not re.match(key, wordList[i]) is None:
-                        twit_emotion_word_index_to_score_map[i] = self.EmotionLookupTableMap[key]
+                    if key.endswith('*'):
+                        if re.match(key[:-1], wordList[i]) is not None:
+                            # print 'EMOTION WORD1:'
+                            # print 'KEY:', key
+                            # print 'WORD:', wordList[i]
+                            twit_emotion_word_index_to_score_map[i] = self.EmotionLookupTableMap[key]
+                    else:
+                        # if key == 'long':
+                        #     print wordList[i].lower()
+                        if key == wordList[i].lower():
+                            # print 'EMOTION WORD2:'
+                            # print 'KEY:', key
+                            # print 'WORD:', wordList[i]
+                            twit_emotion_word_index_to_score_map[i] = self.EmotionLookupTableMap[key]
         
         for emotionalWordIndex in twit_emotion_word_index_to_score_map:
             sign = 0
@@ -136,7 +179,14 @@ class SentimentAnalyzer:
                     absScore *= -1
                     
                 if  (i - 2) in twit_booster_word_index_to_score_map:
-                    absScore += twit_booster_word_index_to_score_map[i - 1]
+                    try:
+                        absScore += twit_booster_word_index_to_score_map[i - 1] #TODO: OFIR. bug on this line.
+                    except:
+                        print 'BUG!'
+                        print 'LINE OF CODE:'
+                        print 'absScore += twit_booster_word_index_to_score_map[i - 1]'
+                        print 'There was a problem with the twit:'
+                        print twit
                 elif (i - 2) in twit_negating_word_index_set:
                     absScore *= -1
                 
@@ -154,29 +204,39 @@ class SentimentAnalyzer:
 
         return score, tagged_twit
 
-    def convertSlangToWords(self, twit):
+    def convertSlangToWords(self, wordList):
         '''
         Returns the twit with the slang replaced as actual words.
         For example, if the twit is 'btw nobody likes Ofir'. This function will return
         'by the way nobody likes Ofir'.
         '''
-        for key in self.SlangLookupTableMap:
-            twit = twit.replace(key, self.SlangLookupTableMap[key])
+        convertedWordList = []
 
-        return twit
+        for word in wordList:
+            for key in self.SlangLookupTableMap:
+                if key == word:
+                    convertedWordList.append(self.SlangLookupTableMap[key])
+                    break
 
-    def clean_up_twit(self, twit):
+            # word is not an abbreviation
+            convertedWordList.append(word)
+
+        return convertedWordList
+
+    def addMoreEmotionWords(self):
         '''
-        Returns a twit with charachters converted to normal charachters. eg. &amp; -> &
-        Maybe HTMLParser is supposed to do this, but it doesn't handle everything.
+        Adds some important stock specific words to emotionMap.
+        TODO: Not sure about the scoring.
         '''
-        twit = twit.replace('&amp;#39;', '\'')
-        twit = twit.replace('&amp;', '&')
-        twit = twit.replace('&quot;', '\"')
-        twit = twit.replace('&lt;', '<')
-        twit = twit.replace('&gt;', '>')
+        self.EmotionLookupTableMap['bear'] = '-5'
+        self.EmotionLookupTableMap['bearish'] = '-5'
 
-        return twit
+        self.EmotionLookupTableMap['bull'] = '5'
+        self.EmotionLookupTableMap['bullish'] = '5'
+
+        self.EmotionLookupTableMap['long'] = '4'
+        self.EmotionLookupTableMap['short'] = '-4'
+
     
 def convert_csv_file_to_array_of_dicts(csv_filename, headers='first row'):
     '''
@@ -243,33 +303,47 @@ def buildSetFromFile (fname):
      
     return retSet
 
-def clean_up_twits_array(twits_array):
+def clean_up_twit(twit):
     '''
-    In an attempt to speed things up, this function removes most of the stuff from the array
-    that we don't need. If we need more stuff from it, we can always add it at a later date.
+    Returns a twit with charachters converted to normal charachters. eg. &amp; -> &
+    Maybe HTMLParser is supposed to do this, but it doesn't handle everything.
     '''
+    twit = twit.replace('&amp;#39;', '\'')
+    twit = twit.replace('&#39;', '\'')
+    twit = twit.replace('&amp;', '&')
+    twit = twit.replace('&quot;', '\"')
+    twit = twit.replace('&lt;', '<')
+    twit = twit.replace('&gt;', '>')
 
-    clean_array = []
+    return twit
 
-    for twit_data in twits_array:
-        clean_row = {}
-        clean_row['body'] = twit_data['body']
-        clean_row['stock_symbols'] = twit_data['stock_symbols']
-        clean_array.append(clean_row)
+# def clean_up_twits_array(twits_array):
+#     '''
+#     In an attempt to speed things up, this function removes most of the stuff from the array
+#     that we don't need. If we need more stuff from it, we can always add it at a later date.
+#     '''
 
-    return clean_array
+#     clean_array = []
+
+#     for twit_data in twits_array:
+#         clean_row = {}
+#         clean_row['body'] = twit_data['body']
+#         clean_row['stock_symbols'] = twit_data['stock_symbols']
+#         clean_array.append(clean_row)
+
+#     return clean_array
 
 def main():
-    twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
-    # twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData1000.csv')
+    # twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
+    twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData1000.csv')
 
     sa = SentimentAnalyzer()
 
     print 'PRINTING THE SCORES OF TWITS WITH SCORE != 0'
 
     # pbar is just to give a visual indication of the progress made so far.
-    pbar = ProgressBar(maxval=len(twits_array)).start()
-    i = 0
+    # pbar = ProgressBar(maxval=len(twits_array)).start()
+    # i = 0
 
     for twit_data in twits_array:
         score, tagged_twit = sa.analyze(twit_data)
@@ -278,12 +352,10 @@ def main():
             print 'TWIT:', tagged_twit
             print 'SCORE:', score
 
-        pbar.update(i)
-        i += 1
+        # pbar.update(i)
+        # i += 1
 
-    pbar.finish()
-
-
+    # pbar.finish()
 
 
 if __name__ == '__main__':
