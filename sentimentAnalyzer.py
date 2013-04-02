@@ -18,6 +18,10 @@ To access the body of a twit you would write twit_data['body'].
 '''
 
 '''
+BUGS on this line:
+absScore += int(twit_booster_word_index_to_score_map[i - 1])
+
+
 Maybe we should deal with this. I'm not sure.
 
 A list of twits with bad scores:
@@ -28,22 +32,16 @@ Probably leave this one. Bomb could be bad.
 
 TWIT: $DRIV looks like it is breaking down from base.
 SCORE: 2
+The problem is probably with like. Maybe we should avoid looks like.
 
 TWIT: $WBSN looks like it is headed down for a gap fill.
 SCORE: 2
+The problem is probably with like. Maybe we should avoid looks like.
 
 TWIT: $CRY was a good one today sorry for not posting it sooner
 SCORE: -4
 What went wrong here? The word CRY? If so, we should deal with that. Shouldn't
 be checking things that start with $ or @.
-
-
-
-BUG!
-LINE OF CODE:
-absScore += twit_booster_word_index_to_score_map[i - 1]
-There was a problem with the twit:
-$ININ also holding its breakout very well.
 '''
 
 class SentimentAnalyzer:
@@ -169,24 +167,32 @@ class SentimentAnalyzer:
                 sign = 1
             if i == 1:
                 if  (i - 1) in twit_booster_word_index_to_score_map:
-                    absScore += twit_booster_word_index_to_score_map[i - 1]
+                    try:
+                        absScore += int(twit_booster_word_index_to_score_map[i - 1])
+                    except:
+                        print 'ERROR!'
+                        print 'FOR TWIT:', twit
+                        print 'IN THIS CODE: absScore += int(twit_booster_word_index_to_score_map[i - 1])'
                 elif (i - 1) in twit_negating_word_index_set:
                     absScore *= -1
             elif i > 1:
                 if  (i - 1) in twit_booster_word_index_to_score_map:
-                    absScore += twit_booster_word_index_to_score_map[i - 1]
+                    try:
+                        absScore += int(twit_booster_word_index_to_score_map[i - 1])
+                    except:
+                        print 'ERROR!'
+                        print 'FOR TWIT:', twit
+                        print 'IN THIS CODE: absScore += int(twit_booster_word_index_to_score_map[i - 1])'
                 elif (i - 1) in twit_negating_word_index_set:
                     absScore *= -1
                     
                 if  (i - 2) in twit_booster_word_index_to_score_map:
                     try:
-                        absScore += twit_booster_word_index_to_score_map[i - 1] #TODO: OFIR. bug on this line.
+                        absScore += int(twit_booster_word_index_to_score_map[i - 1])
                     except:
-                        print 'BUG!'
-                        print 'LINE OF CODE:'
-                        print 'absScore += twit_booster_word_index_to_score_map[i - 1]'
-                        print 'There was a problem with the twit:'
-                        print twit
+                        print 'ERROR!'
+                        print 'FOR TWIT:', twit
+                        print 'IN THIS CODE: absScore += int(twit_booster_word_index_to_score_map[i - 1])'
                 elif (i - 2) in twit_negating_word_index_set:
                     absScore *= -1
                 
@@ -334,8 +340,11 @@ def clean_up_twit(twit):
 #     return clean_array
 
 def main():
+    from time import time
+    startTime = time()
+
     # twits_array = convert_csv_file_to_array_of_dicts('StockTwits-Data(beginning of file).csv')
-    twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData1000.csv')
+    twits_array = convert_csv_file_to_array_of_dicts('StockTwitsData10000.csv')
 
     sa = SentimentAnalyzer()
 
@@ -356,6 +365,11 @@ def main():
         # i += 1
 
     # pbar.finish()
+
+    endTime = time()
+    timeTaken = endTime - startTime
+
+    print 'Total time taken:', timeTaken
 
 
 if __name__ == '__main__':
