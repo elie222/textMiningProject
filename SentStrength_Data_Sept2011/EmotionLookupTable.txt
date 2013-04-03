@@ -45,9 +45,7 @@ affectation*	-2	General Inquirer Feb 2010
 affection*	3	
 afflict*	-3	General Inquirer Feb 2010
 afraid	-4	
-against	-2	General Inquirer Feb 2010
 aggravat*	-3	
-aggress*	-3	
 aggrieve*	-2	General Inquirer Feb 2010
 aghast	-2	General Inquirer Feb 2010
 agitat*	-2	
@@ -67,7 +65,6 @@ alien	-2	General Inquirer Feb 2010
 alienat*	-2	General Inquirer Feb 2010
 allegation*	-2	General Inquirer Feb 2010
 allege*	-2	General Inquirer Feb 2010
-alol	2	actually laughing out loud
 alone	-1	removed alright*	2	
 aloof	-2	General Inquirer Feb 2010
 altercation*	-2	General Inquirer Feb 2010
@@ -149,8 +146,6 @@ awesome*	3	kev add star
 awful*	-4	
 awkward*	-2	
 babble*	-2	General Inquirer Feb 2010
-babies	2	27 July 2009 (assumes positive context -e.g. hey baby)
-baby	2	27 July 2009 (assumes positive context -e.g. hey baby)
 backwardness	-2	General Inquirer Feb 2010
 bad	-2	
 badly	-2	General Inquirer Feb 2010
@@ -173,7 +168,6 @@ barren	-2	General Inquirer Feb 2010
 barrier*	-2	General Inquirer Feb 2010
 bashful*	-3	
 bastard*	-3	removed battl*	-2	
-battle*	-2	General Inquirer Feb 2010
 beastly	-2	General Inquirer Feb 2010
 beaten	-1	
 beatings	-3	kev
@@ -466,7 +460,6 @@ critici*	-2
 croak	-2	General Inquirer Feb 2010
 crook	-2	General Inquirer Feb 2010
 crooked	-2	General Inquirer Feb 2010
-cross	-2	General Inquirer Feb 2010
 crude*	-2	
 cruel*	-4	
 crumble	-2	General Inquirer Feb 2010
@@ -909,7 +902,6 @@ forbid*	-2
 forbidding*	-3	kev add
 force	-2	General Inquirer Feb 2010
 foreboding	-2	General Inquirer Feb 2010
-foreign	-2	General Inquirer Feb 2010
 forfeit	-2	General Inquirer Feb 2010
 forgave	2	
 forgetfulness	-2	General Inquirer Feb 2010
@@ -1039,11 +1031,9 @@ gullible	-2	General Inquirer Feb 2010
 gun*	-2	General Inquirer Feb 2010
 gunmen	-2	General Inquirer Feb 2010
 h8	-4	hate
-ha	2	
 hack	-2	
 hag	-2	General Inquirer Feb 2010
 haggard	-2	General Inquirer Feb 2010
-haha*	2	
 halfwit	-2	Feb-11
 handicap	-2	General Inquirer Feb 2010
 handsom*	2	
@@ -1158,9 +1148,7 @@ idioc*	-3	kev add
 idiot*	-3	kev mod
 idleness	-2	General Inquirer Feb 2010
 ignoble	-2	General Inquirer Feb 2010
-ignor*	-3	
-ignore*	1	kev add
-ignoring	1	kev add
+ignor*	-1	
 ill	-2	General Inquirer Feb 2010
 illegal	-2	General Inquirer Feb 2010
 illegality	-2	General Inquirer Feb 2010
@@ -1299,8 +1287,6 @@ jerked	-1
 jerks	-3	
 jittery	-2	General Inquirer Feb 2010
 jobless	-2	General Inquirer Feb 2010
-joke*	2	
-joking	3	
 joll*	3	
 jolliet	1	kev add
 joy*	3	
@@ -1312,23 +1298,17 @@ keen*	1
 kick*	-2	General Inquirer Feb 2010
 kidding	1	
 kidnap	-2	General Inquirer Feb 2010
-kill	-2	General Inquirer Feb 2010
-killed	-4	
-killer	-2	
-killing	-2	
 killjoy	-2	kev add
 kind	2	was 3 - 2 aug 2009 could be "kind of"=neutral
 kindly	2	
 kindn*	2	
 kiss*	3	
-knife	-2	General Inquirer Feb 2010
 lack	-2	General Inquirer Feb 2010
 laidback	2	
 lame*	-3	
 lament*	-2	General Inquirer Feb 2010
 languish	-2	General Inquirer Feb 2010
 lapse	-2	General Inquirer Feb 2010
-laugh*	2	27 July 2009 change from 2
 laughable	-2	Feb-11
 laughingstock*	-3	kev add
 lawless	-2	General Inquirer Feb 2010
@@ -1359,9 +1339,6 @@ litig*	-2	Feb-11
 litter*	-2	General Inquirer Feb 2010
 livel*	2	
 livelihood	1	kev add
-lmao	3	
-lol	2	27 July 2009 (from 3)
-lolol*	2	27-Jul-09
 lone*	-2	
 longing*	-3	
 lose	-2	
@@ -1382,7 +1359,6 @@ loves	3
 lovin	3	slang
 loving*	4	kev add
 low*	-2	
-lower*	1	kev add
 loyal*	2	
 luck	3	wasn't Changed 2 Aug 2009 -although often used as neutral or negative
 lucked	3	
@@ -1424,7 +1400,6 @@ marginal	-2	General Inquirer Feb 2010
 martyr*	-2	Feb-11
 masochis*	-3	
 massacre*	-2	General Inquirer Feb 2010
-mate	2	
 meager*	-2	General Inquirer Feb 2010
 meanie	-2	Feb-11
 meaningless*	-2	General Inquirer Feb 2010
@@ -1526,8 +1501,6 @@ nucklehead*	-2	Feb-11
 nuisance	-2	General Inquirer Feb 2010
 nullification*	-2	General Inquirer Feb 2010
 nullify	-2	General Inquirer Feb 2010
-numb*	-2	
-number*	1	kev add
 numpty	-2	Feb-11
 nurtur*	1	
 nutcase*	-2	Feb-11
@@ -1556,7 +1529,6 @@ okay	1
 okays	1	
 oks	1	
 omfg	2	
-omg	2	
 ominous*	-3	General Inquirer Feb 2010
 omissions	-2	General Inquirer Feb 2010
 omit	-2	General Inquirer Feb 2010
@@ -1596,7 +1568,6 @@ oversight*	-2	General Inquirer Feb 2010
 overthrow*	-2	General Inquirer Feb 2010
 overturn*	-2	General Inquirer Feb 2010
 overweight	-2	Feb-11
-overwhelm*	-3	
 overwork*	-2	General Inquirer Feb 2010
 owe	-2	General Inquirer Feb 2010
 pain	-4	
@@ -1651,13 +1622,8 @@ piti*	-3
 pity* 	-2	
 plague*	-2	General Inquirer Feb 2010
 plaintiff	-2	General Inquirer Feb 2010
-play	1	
-played	1	
-playful*	2	
-playing	2	
-plays	2	
+pleased	3	
 pleasant*	3	
-please*	2	
 pleasing*	3	
 pleasur*	3	
 plight	-2	General Inquirer Feb 2010
@@ -1742,8 +1708,6 @@ radian	1	Tuomo Aug 3, 2011
 radian*	3	
 radians	1	Tuomo Aug 3, 2011
 radical*	-2	General Inquirer Feb 2010
-rage*	-4	
-raging	-4	
 raid	-2	General Inquirer Feb 2010
 ramble	-2	General Inquirer Feb 2010
 rampant	-2	General Inquirer Feb 2010
@@ -1819,7 +1783,7 @@ revigor*	2
 revitalize	2	Hannes GI add
 revoke*	-2	General Inquirer Feb 2010
 revolt*	-2	General Inquirer Feb 2010
-revolution*	-2	General Inquirer Feb 2010
+revolution*	3	General Inquirer Feb 2010
 reward*	2	
 rich*	1	
 richard*	1	kev add
@@ -1837,7 +1801,6 @@ rival	-2	General Inquirer Feb 2010
 rivalry	-2	General Inquirer Feb 2010
 robber*	-2	General Inquirer Feb 2010
 rock	2	As in You rock! but not as in rock, stone, can also be rock music, listen to rock
-rofl	3	
 rogue	-2	General Inquirer Feb 2010
 romanc*	4	
 romantic*	4	
@@ -1851,7 +1814,6 @@ rue	-2	General Inquirer Feb 2010
 ruffian*	-2	General Inquirer Feb 2010
 ruin*	-2	
 ruins	1	kev add
-rumor	-2	General Inquirer Feb 2010
 rumple	-2	General Inquirer Feb 2010
 runaway*	-2	General Inquirer Feb 2010
 rupture*	-2	General Inquirer Feb 2010
@@ -1901,7 +1863,6 @@ scummy	-2	new
 secede	-2	General Inquirer Feb 2010
 secession	-2	General Inquirer Feb 2010
 secrecy	-1	General Inquirer Feb 2010
-secret	-1	General Inquirer Feb 2010
 secur*	2	
 sedentary	-2	General Inquirer Feb 2010
 seeth*	-2	General Inquirer Feb 2010 kev mod 
@@ -1930,9 +1891,7 @@ shaki*	-2
 shaky	-2	
 shallow	-2	General Inquirer Feb 2010
 shame*	-3	
-share	1	
 shared	1	
-shares	1	
 sharing	1	
 shark	-2	General Inquirer Feb 2010
 shipwreck*	-2	General Inquirer Feb 2010
@@ -1946,7 +1905,6 @@ shoot*	-2	General Inquirer Feb 2010
 shortage*	-2	General Inquirer Feb 2010
 shortcoming*	-2	General Inquirer Feb 2010
 shortsighted*	-2	General Inquirer Feb 2010
-shot	-2	General Inquirer Feb 2010
 shove	-2	General Inquirer Feb 2010
 shred*	-2	General Inquirer Feb 2010
 shrew	-2	General Inquirer Feb 2010
@@ -2179,7 +2137,6 @@ tardy	-2	General Inquirer Feb 2010
 tariff	-2	General Inquirer Feb 2010
 tatter	-2	General Inquirer Feb 2010
 taunt*	-2	General Inquirer Feb 2010
-tax*	-2	General Inquirer Feb 2010
 tear	-2	General Inquirer Feb 2010
 tears	-4	
 tease*	-2	kev mod
@@ -2289,7 +2246,6 @@ truth*	2
 turbulent*	-2	General Inquirer Feb 2010
 turmoil	-3	
 twat	-2	Feb-11
-twit	-2	Feb-11
 twitch	-1	General Inquirer Feb 2010
 twunt	-2	Feb-11
 tyranny	-3	General Inquirer Feb 2010
@@ -2419,7 +2375,6 @@ venom	-4	General Inquirer Feb 2010
 venomous*	-4	General Inquirer Feb 2010
 veto	-2	General Inquirer Feb 2010
 vex*	-3	General Inquirer Feb 2010
-vice	-2	General Inquirer Feb 2010
 vicious*	-4	
 victim*	-3	
 vie	-2	General Inquirer Feb 2010
@@ -2530,13 +2485,6 @@ wrong	-2
 wrong*	-3	kev mod
 wrought	-1	General Inquirer Feb 2010
 wtf	-3	what the fuck?
-x	2	27-Jul-09
-xox*	2	
-xx*	2	
-xx*	2	
-xxi*	1	kev mod
-xxv*	1	kev mod
-xxy	1	kev mod
 yawn	-2	General Inquirer Feb 2010
 yay	2	auto check 4 aug 2009
 yays	3	

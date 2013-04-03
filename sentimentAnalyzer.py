@@ -69,37 +69,6 @@ class SentimentAnalyzer:
         # h = HTMLParser()
         
 
-    # def analyze(self, twit_data):
-    #     pos_score = 0
-    #     neg_score = 0
-    #     tagged_twit = twit_data['body']
-
-    #     if len(twit_data['stock_symbols']) == 0:
-    #         return pos_score, tagged_twit
-
-    #     for row in self.pos_sentiment_array:
-    #         result = re.search(row['sentence'], tagged_twit, re.X)
-
-    #         if result is not None:
-    #             pos_score += row['score']
-    #             # print 'POS'
-    #             # print tagged_twit
-    #             # print row['score']
-    #             # print row['sentence']
-
-    #     for row in self.neg_sentiment_array:
-    #         result = re.search(row['sentence'], tagged_twit, re.X)
-
-    #         if result is not None:
-    #             neg_score += row['score']
-    #             # print 'NEG'
-    #             # print tagged_twit
-    #             # print row['score']
-    #             # print row['sentence']
-
-    #     return pos_score - neg_score, tagged_twit
-
-
     def analyze(self, twit_data):
         '''
         TODO: Doesn't work ATM.
@@ -110,10 +79,10 @@ class SentimentAnalyzer:
 
         score = 0
         twit = clean_up_twit(twit_data['body'])
-        tagged_twit = twit
+        
 
         if len(twit_data['stock_symbols']) == 0:
-            return score, tagged_twit
+            return score
 
         fixed_twit = h.unescape(twit)
 
@@ -121,7 +90,6 @@ class SentimentAnalyzer:
         wordList = nltk.word_tokenize(fixed_twit)
 
         wordList = self.convertSlangToWords(wordList)
-
         #print wordList
         
         twit_negating_word_index_set = set([])
@@ -131,41 +99,41 @@ class SentimentAnalyzer:
         # print '===TWIT:', twit
 
         for i in xrange(len(wordList)):
+            if i>0:
+                if wordList[i - 1] == '$':
+                    continue
             if wordList[i] in self.NegatingWordSet:
                 # print 'NEGATING WORD:', wordList[i]
                 twit_negating_word_index_set.add(i)
             elif wordList[i] in self.BoosterWordMap:
                 # print 'BOOSTER WORD:', wordList[i]
                 twit_booster_word_index_to_score_map[i] = self.BoosterWordMap[wordList[i]]
-            elif wordList[i] in self.EmoticonLookupTableMap:
-                # print 'EMOTICON:', wordList[i]
-                score += int(self.EmoticonLookupTableMap[i])
             else:
                 for key in self.EmotionLookupTableMap:
                     if key.endswith('*'):
                         if re.match(key[:-1], wordList[i]) is not None:
-                            # print 'EMOTION WORD1:'
-                            # print 'KEY:', key
-                            # print 'WORD:', wordList[i]
                             twit_emotion_word_index_to_score_map[i] = self.EmotionLookupTableMap[key]
+                            #if not twit_emotion_word_index_to_score_map[i] == 0:
+                            #    print wordList[i], twit_emotion_word_index_to_score_map[i]
                     else:
-                        # if key == 'long':
-                        #     print wordList[i].lower()
+                        if i > 0 and wordList[i].lower()=='like' and (wordList[i-1].lower() in ['look','looks']):
+                            continue
                         if key == wordList[i].lower():
-                            # print 'EMOTION WORD2:'
-                            # print 'KEY:', key
-                            # print 'WORD:', wordList[i]
                             twit_emotion_word_index_to_score_map[i] = self.EmotionLookupTableMap[key]
-        
-        for emotionalWordIndex in twit_emotion_word_index_to_score_map:
+                            #if not twit_emotion_word_index_to_score_map[i] == 0:
+                            #    print wordList[i], twit_emotion_word_index_to_score_map[i]
+        #print twit_booster_word_index_to_score_map
+        #print twit_negating_word_index_set
+        for i in twit_emotion_word_index_to_score_map:
             sign = 0
-            emScore = int(twit_emotion_word_index_to_score_map[emotionalWordIndex])
+            emScore = int(twit_emotion_word_index_to_score_map[i])
             absScore = abs(emScore)
             if emScore < 0:
                 sign = -1
             else:
                 sign = 1
             if i == 1:
+                
                 if  (i - 1) in twit_booster_word_index_to_score_map:
                     absScore += int(twit_booster_word_index_to_score_map[i - 1])
                 elif (i - 1) in twit_negating_word_index_set:
@@ -180,12 +148,16 @@ class SentimentAnalyzer:
                     absScore += int(twit_booster_word_index_to_score_map[i - 2])
                 elif (i - 2) in twit_negating_word_index_set:
                     absScore *= -1
-                
+            #print absScore   
             emScore = absScore * sign
-            #print emScore
+            ###looking for eomoticons
+            #print self.EmoticonLookupTableMap
+            for eomoticon in self.EmoticonLookupTableMap:
+                if not fixed_twit.find(eomoticon) == -1:
+                    emScore += int(self.EmoticonLookupTableMap[eomoticon])
             score += emScore
-            
-        if not re.match('!!!', fixed_twit ) is None:
+           
+        if not re.search('!!!', fixed_twit ) is None:
             sign = 0 
             if score < 0:
                 sign = -1
@@ -193,7 +165,7 @@ class SentimentAnalyzer:
                 sign = 1
             score = sign*(abs(score) + 1)
 
-        return score, tagged_twit
+        return score
 
     def convertSlangToWords(self, wordList):
         '''
@@ -202,15 +174,20 @@ class SentimentAnalyzer:
         'by the way nobody likes Ofir'.
         '''
         convertedWordList = []
-
+        
         for word in wordList:
+            isReplaced = False
             for key in self.SlangLookupTableMap:
                 if key == word:
-                    convertedWordList.append(self.SlangLookupTableMap[key])
+                    slangTraslationList = nltk.word_tokenize(self.SlangLookupTableMap[key])
+                    for word in slangTraslationList:
+                        convertedWordList.append(word)
+                    isReplaced = True
                     break
 
             # word is not an abbreviation
-            convertedWordList.append(word)
+            if not isReplaced:
+                convertedWordList.append(word)
 
         return convertedWordList
 
@@ -255,6 +232,35 @@ def convert_csv_file_to_array_of_dicts(csv_filename, headers='first row'):
 
     return array_of_dicts
 
+def convert_csv_file_to_array_of_dicts_for_ticker(csv_filename, ticker, headers='first row'):
+    '''
+    Returns an array of dictionaries where each dictionary represents a row of the csv file.
+    The keys of each dictionary are the headers. The values are the cells of the row.
+
+    Example: if you want to access the stock_ids of the fifth twit in the list, you would do:
+    array_of_dicts[4]['stock_ids'].
+
+    headers - the names of the keys of the dictionary. If headers is set to 'first row',
+    then the first row of the csv file will be the keys in the dictionary.
+    '''
+    array_of_dicts = []
+
+    with open(csv_filename, 'r') as f:
+        reader = csv.reader(f)
+
+        if headers == 'first row':
+            headers = reader.next()
+
+        for row in reader:
+            #creates a dict with headers as keys and row as values
+            rowDict = dict(zip(headers,row))
+            
+            rowTickers = rowDict['stock_symbols'].split(",")
+            if ticker in rowTickers:
+                array_of_dicts.append(rowDict)
+
+    return array_of_dicts
+    
 def buildMapFromFile (fname, sep):
     '''
     The file is of the form:
@@ -308,23 +314,32 @@ def clean_up_twit(twit):
 
     return twit
 
-# def clean_up_twits_array(twits_array):
-#     '''
-#     In an attempt to speed things up, this function removes most of the stuff from the array
-#     that we don't need. If we need more stuff from it, we can always add it at a later date.
-#     '''
+def tagBody(body, score):
+    retStr = ""
+    if score > 3:
+        retStr = "<very positive>" + body + "</very positive>"
+    elif score > 0:
+        retStr = "<positive>" + body + "</positive>"
+    elif score == 0:
+        retStr = "<neutral>" + body + "</neutral>"
+    elif score < -3:
+        retStr = "<very negative>" + body + "</very negative>"
+    elif score < 0:
+        retStr = "<negative>" + body + "</negative>"
+    return retStr
+    
+def getAllTickerTwits(ticker, sa):
+    twits_array = convert_csv_file_to_array_of_dicts_for_ticker('StockTwitsData100000.csv', ticker)
+    with open(ticker + ".csv", 'w') as f:
+        writer = csv.writer(f, lineterminator='\n')
+        for twit_data in twits_array:
+            score = sa.analyze(twit_data)
+            taggedBody = tagBody(twit_data['body'], score)
+            writer.writerow([twit_data['created_at'],twit_data['stock_symbols'], taggedBody, score])
 
-#     clean_array = []
-
-#     for twit_data in twits_array:
-#         clean_row = {}
-#         clean_row['body'] = twit_data['body']
-#         clean_row['stock_symbols'] = twit_data['stock_symbols']
-#         clean_array.append(clean_row)
-
-#     return clean_array
 
 def main():
+    """
     from time import time
     startTime = time()
 
@@ -333,18 +348,18 @@ def main():
 
     sa = SentimentAnalyzer()
 
-    print 'PRINTING THE SCORES OF TWITS WITH SCORE != 0'
+    #print 'PRINTING THE SCORES OF TWITS WITH SCORE != 0'
 
     # pbar is just to give a visual indication of the progress made so far.
     # pbar = ProgressBar(maxval=len(twits_array)).start()
     # i = 0
 
     for twit_data in twits_array:
-        score, tagged_twit = sa.analyze(twit_data)
+        score = sa.analyze(twit_data)
 
-        if not score == 0:
-            print 'TWIT:', tagged_twit
-            print 'SCORE:', score
+        #if not score == 0:
+        print 'TWIT:', twit_data['body']
+        print 'SCORE:', score
 
         # pbar.update(i)
         # i += 1
@@ -355,7 +370,17 @@ def main():
     timeTaken = endTime - startTime
 
     print 'Total time taken:', timeTaken
-
-
+    """
+    sa = SentimentAnalyzer()
+    getAllTickerTwits("MU", sa)
+    getAllTickerTwits("C", sa)
+    getAllTickerTwits("MLNX", sa)
+    getAllTickerTwits("GOOG", sa)
+    getAllTickerTwits("GS", sa)
+    getAllTickerTwits("POT", sa)
+    getAllTickerTwits("AAPL", sa)
+    getAllTickerTwits("LVS", sa)
+    getAllTickerTwits("INTC", sa)
+    getAllTickerTwits("MSFT", sa)    
 if __name__ == '__main__':
     main()
