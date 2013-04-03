@@ -42,6 +42,9 @@ TWIT: $CRY was a good one today sorry for not posting it sooner
 SCORE: -4
 What went wrong here? The word CRY? If so, we should deal with that. Shouldn't
 be checking things that start with $ or @.
+
+TWIT: $QQQQ up big on the year. don't fight the tape?
+SCORE: -3
 '''
 
 class SentimentAnalyzer:
