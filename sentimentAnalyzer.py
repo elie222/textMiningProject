@@ -257,8 +257,13 @@ def convert_csv_file_to_array_of_dicts_for_ticker(csv_filename, ticker, headers=
         for row in reader:
             #creates a dict with headers as keys and row as values
             rowDict = dict(zip(headers,row))
-            
-            rowTickers = rowDict['stock_symbols'].split(",")
+            try:
+                rowTickers = rowDict['stock_symbols'].split(",")
+            except:
+                print 'IGNORING EXCEPTION'
+                pass
+                # print rowDict
+                # sys.exit()
             if ticker in rowTickers:
                 array_of_dicts.append(rowDict)
 
@@ -383,8 +388,8 @@ def main():
     """
     sa = SentimentAnalyzer()
 
-    filename = 'StockTwitsDataMLNX268.csv'
-    getAllTickerTwits(filename, "MLNX", sa)
+    # filename = 'StockTwitsDataMLNX268.csv'
+    # getAllTickerTwits(filename, "MLNX", sa)
 
     filename = 'StockTwitsDataMU1000.csv'
     getAllTickerTwits(filename, "MU", sa)
