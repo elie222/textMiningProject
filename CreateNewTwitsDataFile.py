@@ -1,7 +1,7 @@
 import sys
 
-NO_OF_LINES = 600
-TICKER = 'MLNX'
+NO_OF_LINES = 1000
+TICKER = 'MU'
 
 output = ''
 
@@ -9,7 +9,7 @@ f = open('2Year-StockTwits-Data.csv', 'r')
 
 i = 0
 for line in f:
-	if '$' + TICKER in line:
+	if '$' + TICKER in line or i == 0:
 		output += line
 		i += 1
 		# print i
@@ -18,6 +18,6 @@ for line in f:
 
 f.close()
 
-g = open('StockTwitsData' + TICKER + str(NO_OF_LINES) + '.csv', 'w')
+g = open('StockTwitsData' + TICKER + str(i) + '.csv', 'w')
 g.write(output)
 g.close()

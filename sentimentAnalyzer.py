@@ -331,22 +331,22 @@ def tagBody(body, score):
         retStr = "<negative>" + body + "</negative>"
     return retStr
     
-def getAllTickerTwits(ticker, sa):
-    # filename = 'StockTwitsData100000.csv'
-    filename = '2Year-StockTwits-Data.csv'
+def getAllTickerTwits(filename, ticker, sa):
     twits_array = convert_csv_file_to_array_of_dicts_for_ticker(filename, ticker)
     print len(twits_array)
     sys.exit()
     with open(ticker + ".csv", 'w') as f:
         writer = csv.writer(f, lineterminator='\n')
-        i = 0
+        # i = 0
         for twit_data in twits_array:
-            if i == 300:
-                break
-            i += 1
+            # if i == 300:
+            #     break
+            # i += 1
             score = sa.analyze(twit_data)
             taggedBody = tagBody(twit_data['body'], score)
             writer.writerow([twit_data['created_at'],twit_data['stock_symbols'], taggedBody, score])
+
+    print 'FINISHED:', ticker
 
 
 def main():
@@ -383,9 +383,11 @@ def main():
     print 'Total time taken:', timeTaken
     """
     sa = SentimentAnalyzer()
-    getAllTickerTwits("MU", sa)
+    filename = 'StockTwitsDataMLNX267.csv'
+    getAllTickerTwits(filename, "MU", sa)
     # getAllTickerTwits("C", sa)
-    # getAllTickerTwits("MLNX", sa)
+    filename = 'StockTwitsDataMU600.csv'
+    getAllTickerTwits("MLNX", sa)
     # getAllTickerTwits("GOOG", sa)
     # getAllTickerTwits("GS", sa)
     # getAllTickerTwits("POT", sa)
