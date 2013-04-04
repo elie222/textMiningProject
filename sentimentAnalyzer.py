@@ -334,7 +334,6 @@ def tagBody(body, score):
 def getAllTickerTwits(filename, ticker, sa):
     twits_array = convert_csv_file_to_array_of_dicts_for_ticker(filename, ticker)
     print len(twits_array)
-    sys.exit()
     with open(ticker + ".csv", 'w') as f:
         writer = csv.writer(f, lineterminator='\n')
         # i = 0
@@ -383,11 +382,15 @@ def main():
     print 'Total time taken:', timeTaken
     """
     sa = SentimentAnalyzer()
-    filename = 'StockTwitsDataMLNX267.csv'
+
+    filename = 'StockTwitsDataMLNX268.csv'
+    getAllTickerTwits(filename, "MLNX", sa)
+
+    filename = 'StockTwitsDataMU1000.csv'
     getAllTickerTwits(filename, "MU", sa)
+    
     # getAllTickerTwits("C", sa)
-    filename = 'StockTwitsDataMU600.csv'
-    getAllTickerTwits("MLNX", sa)
+    
     # getAllTickerTwits("GOOG", sa)
     # getAllTickerTwits("GS", sa)
     # getAllTickerTwits("POT", sa)
