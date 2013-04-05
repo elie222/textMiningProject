@@ -6,6 +6,12 @@ import os
 import nltk # http://nltk.org/install.html
 from HTMLParser import HTMLParser
 from progressbar import ProgressBar
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import matplotlib as mpl
+import datetime as dt
+
+
 
 '''
 These are the headers in the StocksTwitFiles:
@@ -353,6 +359,59 @@ def getAllTickerTwits(filename, ticker, sa):
     print 'FINISHED:', ticker
 
 
+monthsMap = {'Jan': '01', 'Feb': '02', 'Mar': '03','Apr': '04','May': '05','Jun': '06','Jul': '07','Aug': '08','Sep': '09','Oct': '10','Nov': '11','Dec': '12'}
+
+def converDate(strDate):
+    splitted = strDate.split(' ')
+    month= monthsMap[splitted[1]]
+    d = splitted[2] + '/' + month + '/' + splitted[5]
+    return dt.datetime.strptime(d,'%d/%m/%Y').date()
+
+   
+    
+def drawByCoordinates(x, posY, negY): 
+    
+    mpl.rcParams['axes.color_cycle'] = ['r', 'b']
+
+    #dates = ['01/02/1991','01/03/1991','01/04/1991','01/05/1991','03/05/1991','04/06/1991','06/06/1991','17/06/1991','22/06/1991']
+    #x = [dt.datetime.strptime(d,'%d/%m/%Y').date() for d in dates]
+
+    #posY = [3,7,90,3,55,78,99,3,25]
+    #negY = [2,6,77,8,98,12,32,5,17]
+
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
+    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+    plot = plt.plot(x,negY,x,posY)
+    plt.xlabel('dates')
+    plt.ylabel('sentiment')
+    plt.show(plot)
+
+def drawGraph(ticker, startDate, endDate):
+    convStartDate = dt.datetime.strptime(startDate,'%d/%m/%Y').date()
+    convEndDate = dt.datetime.strptime(endDate,'%d/%m/%Y').date()
+    ticker = ticker.upper()
+    twits_array = convert_csv_file_to_array_of_dicts(ticker +'.csv')
+    date_score = {}
+    for twit_data in twits_array:
+        twitDate = converDate(twit_data['date'])
+        if twitDate > convStartDate and twitDate < convEndDate:
+            if not twitDate in date_score:
+                date_score[twitDate] = [0,0]
+            if int(twit_data['score']) > 0:
+                date_score[twitDate][0] += int(twit_data['score'])
+            else:
+                date_score[twitDate][1] -= int(twit_data['score'])
+    keylist = date_score.keys()
+    keylist.sort()       
+    x = [i for i in keylist]
+    posY = [date_score[i][0] for i in keylist]
+    negY = [date_score[i][1] for i in keylist]
+    #print date_score
+    print x
+    print posY
+    print negY
+    drawByCoordinates(x, posY, negY)
+    
 def main():
     """
     from time import time
@@ -386,6 +445,7 @@ def main():
 
     print 'Total time taken:', timeTaken
     """
+    """
     sa = SentimentAnalyzer()
 
     # filename = 'StockTwitsDataMLNX268.csv'
@@ -402,6 +462,8 @@ def main():
     # getAllTickerTwits("AAPL", sa)
     # getAllTickerTwits("LVS", sa)
     # getAllTickerTwits("INTC", sa)
-    # getAllTickerTwits("MSFT", sa)    
+    # getAllTickerTwits("MSFT", sa) 
+    """
+    drawGraph('GOOG', '10/09/2009', '05/11/2009')
 if __name__ == '__main__':
     main()
