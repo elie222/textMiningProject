@@ -5,7 +5,6 @@ import re
 import os
 import nltk # http://nltk.org/install.html
 from HTMLParser import HTMLParser
-from progressbar import ProgressBar
 # import matplotlib.pyplot as plt
 # import matplotlib.dates as mdates
 # import matplotlib as mpl

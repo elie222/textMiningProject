@@ -15,6 +15,7 @@ class SA(QMainWindow):
         self.connectObjects()
 
     def initUI(self):
+        # single twit tab
         twitLabel = QLabel('Twit:', self)
         self.twitInput = QTextEdit(self)
         self.twitInput.setMaximumHeight(100)
@@ -46,20 +47,70 @@ class SA(QMainWindow):
         hboxSentimentResult.addWidget(sentimentScoreTitleLabel)
         hboxSentimentResult.addWidget(self.sentimentScoreLabel)
 
-        vbox = QVBoxLayout()
-        vbox.addLayout(hboxTwitInput)
-        vbox.addLayout(hboxSentimentResult)
+        vboxSingleTwit = QVBoxLayout()
+        vboxSingleTwit.addLayout(hboxTwitInput)
+        vboxSingleTwit.addLayout(hboxSentimentResult)
 
-        mainWidget = QWidget()
-        mainWidget.setLayout(vbox)
 
-        self.setCentralWidget(mainWidget)
+
+        # graph tab
+
+        tickerLabel = QLabel('Ticker:', self)
+        self.tickerGraphInput = QLineEdit(self)
+        startDateLabel = QLabel('Start Date (DD/MM/YYYY):', self)
+        self.startDateGraphInput = QLineEdit(self)
+        endDateLabel = QLabel('End Date (DD/MM/YYYY):', self)
+        self.endDateGraphInput = QLineEdit(self)
+
+        # hboxTickerAndDate = QHBoxLayout()
+        # hboxTickerAndDate.addWidget(tickerLabel)
+        # hboxTickerAndDate.addWidget(self.tickerGraphInput)
+        # hboxTickerAndDate.addWidget(startDateLabel)
+        # hboxTickerAndDate.addWidget(self.startDateGraphInput)
+        # hboxTickerAndDate.addWidget(endDateLabel)
+        # hboxTickerAndDate.addWidget(self.endDateGraphInput)
+
+        self.getGraphBtn = QPushButton('Get Sentiment Graph', self)
+
+        # hboxBtn = QHBoxLayout()
+        # hboxBtn.addWidget(self.getGraphBtn)
+
+        vboxGraph = QVBoxLayout()
+        vboxGraph.addWidget(tickerLabel)
+        vboxGraph.addWidget(self.tickerGraphInput)
+        vboxGraph.addWidget(startDateLabel)
+        vboxGraph.addWidget(self.startDateGraphInput)
+        vboxGraph.addWidget(endDateLabel)
+        vboxGraph.addWidget(self.endDateGraphInput)
+        vboxGraph.addWidget(self.getGraphBtn)
+
+        # vboxGraph.addLayout(hboxTickerAndDate)
+        # vboxGraph.addLayout(hboxBtn)
+
+
+        # main window
+        tabWidget = QTabWidget()
+
+        singleTwitWidget = QWidget()
+        graphWidget = QWidget()
+
+        singleTwitWidget.setLayout(vboxSingleTwit)
+        graphWidget.setLayout(vboxGraph)
+
+        tabWidget.addTab(singleTwitWidget, 'Single Twit')
+        tabWidget.addTab(graphWidget, 'Graph')
+
+        # mainWidget = QWidget()
+        # mainWidget.setLayout(vbox)
+
+        self.setCentralWidget(tabWidget)
 
         self.setGeometry(100, 100, 600, 200)
         self.setWindowTitle('Stock Twits Sentiment Analyzer')
 
     def connectObjects(self):
         self.getSentimentBtn.clicked.connect(self.getSentimentClicked)
+        self.getGraphBtn.clicked.connect(self.getGraphClicked)
 
     def getSentimentClicked(self):
         twitData = {}
@@ -76,6 +127,16 @@ class SA(QMainWindow):
         sentiment = sa.getSentiment(score)
         self.sentimentResultLabel.setText(str(sentiment))
         self.sentimentScoreLabel.setText(str(score))
+
+    def getGraphClicked(self):
+        ticker = str(self.tickerGraphInput.displayText())
+        startDate = str(self.startDateGraphInput.displayText())
+        endDate = str(self.endDateGraphInput.displayText())
+
+        print 'TODO'
+        print ticker
+        print startDate
+        print endDate
 
 
 
