@@ -16,23 +16,23 @@ class SA(QMainWindow):
 
     def initUI(self):
         # single twit tab
-        twitLabel = QLabel('Twit:', self)
+        twitLabel = QLabel('Tweet:', self)
         self.twitInput = QTextEdit(self)
         self.twitInput.setMaximumHeight(100)
         tickerLabel = QLabel('Ticker Symbol:', self)
         self.tickerInput = QLineEdit(self)
+        self.getSentimentBtn = QPushButton('Get Sentiment', self)
         
         vboxTwitDataInput = QVBoxLayout()
         vboxTwitDataInput.addWidget(twitLabel)
         vboxTwitDataInput.addWidget(self.twitInput)
         vboxTwitDataInput.addWidget(tickerLabel)
         vboxTwitDataInput.addWidget(self.tickerInput)
+        vboxTwitDataInput.addWidget(self.getSentimentBtn)
 
-        self.getSentimentBtn = QPushButton('Get Sentiment', self)
-
-        hboxTwitInput = QHBoxLayout()
-        hboxTwitInput.addLayout(vboxTwitDataInput)
-        hboxTwitInput.addWidget(self.getSentimentBtn)
+        # hboxTwitInput = QHBoxLayout()
+        # hboxTwitInput.addLayout(vboxTwitDataInput)
+        # hboxTwitInput.addWidget(self.getSentimentBtn)
 
 
         sentimentResultTitleLabel = QLabel('Sentiment:', self)
@@ -48,7 +48,7 @@ class SA(QMainWindow):
         hboxSentimentResult.addWidget(self.sentimentScoreLabel)
 
         vboxSingleTwit = QVBoxLayout()
-        vboxSingleTwit.addLayout(hboxTwitInput)
+        vboxSingleTwit.addLayout(vboxTwitDataInput)
         vboxSingleTwit.addLayout(hboxSentimentResult)
 
 
