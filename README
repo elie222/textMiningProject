@@ -1,0 +1,15 @@
+Project dependencies:
+
+Libraries:
+
+HTMLParser
+matplotlib
+PyQt4
+
+
+Running the program:
+	python GUI.py
+
+Note:
+	Since all tagging all tickers for all the tweets is a very large data we added only a small data example.
+	On the files we submitted one can only get a graph for GOOG ticker between the dates: 01/09/2009 - 01/01/2010
