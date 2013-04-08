@@ -5,10 +5,10 @@ import re
 import os
 import nltk # http://nltk.org/install.html
 from HTMLParser import HTMLParser
-# import matplotlib.pyplot as plt
-# import matplotlib.dates as mdates
-# import matplotlib as mpl
-# import datetime as dt
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import matplotlib as mpl
+import datetime as dt
 
 
 
@@ -429,6 +429,7 @@ def main():
     """
     sa = SentimentAnalyzer()
     sa.drawGraph('GOOG', '10/09/2009', '05/11/2009')
-
+"""
 if __name__ == '__main__':
     main()
+"""
